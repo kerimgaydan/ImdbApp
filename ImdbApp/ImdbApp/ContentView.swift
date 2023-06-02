@@ -99,15 +99,34 @@ struct APIListView: View {
     var body: some View {
         List(apiList, id: \.API) { api in
             VStack(alignment: .leading) {
-                Text(api.API)
-                    .font(.headline)
-                Text(api.Description)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                NavigationLink(destination: APILinkView(link: api.Link)) {
+                    VStack(alignment: .leading) {
+                        Text(api.API)
+                            .font(.headline)
+                        Text(api.Description)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                }
             }
         }
         .onAppear(perform: fetch)
         .navigationTitle(category)
+    }
+}
+struct APILinkView: View {
+    let link: String
+    
+    var body: some View {
+        VStack {
+            Text("Link:")
+                .font(.headline)
+                .padding()
+            Link(link, destination: URL(string: link)!)
+                .font(.subheadline)
+                .foregroundColor(.blue)
+        }
+        .navigationTitle("Link")
     }
 }
 
